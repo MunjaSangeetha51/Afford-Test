@@ -1,12 +1,186 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Priority Inbox Notification System</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priority Inbox Notification System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+    padding:30px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+.controls{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+button{
+    padding:10px 20px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.notification{
+    background:white;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.placement{
+    border-left:8px solid green;
+}
+
+.result{
+    border-left:8px solid blue;
+}
+
+.event{
+    border-left:8px solid orange;
+}
+
+.type{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.time{
+    color:gray;
+    font-size:12px;
+    margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Priority Inbox Notification System</h1>
+
+<div class="controls">
+<button onclick="loadNotifications()">
+Load Top Notifications
+</button>
+</div>
+
+<div id="notificationList"></div>
+
+</div>
+
+<script>
+
+const notifications = [
+
+{
+id:1,
+type:"Placement",
+message:"Amazon Hiring Drive Open",
+priority:1,
+time:"2 mins ago"
+},
+
+{
+id:2,
+type:"Result",
+message:"Semester Results Published",
+priority:2,
+time:"10 mins ago"
+},
+
+{
+id:3,
+type:"Event",
+message:"Hackathon Tomorrow",
+priority:3,
+time:"20 mins ago"
+},
+
+{
+id:4,
+type:"Placement",
+message:"Microsoft Recruitment Started",
+priority:1,
+time:"1 min ago"
+},
+
+{
+id:5,
+type:"Result",
+message:"Internal Marks Released",
+priority:2,
+time:"5 mins ago"
+}
+
+];
+
+function loadNotifications(){
+
+const sortedNotifications =
+notifications.sort((a,b)=>a.priority-b.priority);
+
+const container =
+document.getElementById("notificationList");
+
+container.innerHTML="";
+
+sortedNotifications.forEach(item=>{
+
+let className="event";
+
+if(item.type==="Placement"){
+className="placement";
+}
+
+if(item.type==="Result"){
+className="result";
+}
+
+container.innerHTML += `
+
+<div class="notification ${className}">
+<div class="type">${item.type}</div>
+<p>${item.message}</p>
+<div class="time">${item.time}</div>
+</div>
+
+`;
+
+});
+
+}
+
+loadNotifications();
+
+</script>
+
+</body>
 </html>
